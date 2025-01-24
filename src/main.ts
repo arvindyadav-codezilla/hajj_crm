@@ -15,7 +15,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 if (environment.production) {
-  enableProdMode();
+  enableProdMode(); 
   //show this warning only on prod mode
   if (window) {
     selfXSSWarning();
