@@ -1,0 +1,84 @@
+<div class="stepper-container">
+    <div class="stepper">
+      <div class="flex items-center mx-auto my-8 justify-around">
+        <div *ngFor="let step of steps; let i = index" class="stepperCounter">
+          <div class="flex items-center flex-col gap-3">
+            <div
+              [ngClass]="{
+                'bg-[#B49164]': i + 1 <= currentStep,
+                'bg-gray-300': i + 1 > currentStep
+              }"
+              class="stepConnecter w-7 h-7 shrink-0 mx-[-1px] flex items-center justify-center rounded-full"
+            >
+              <span
+                [ngClass]="{
+                  'text-white': i + 1 <= currentStep,
+                  'text-[#6F6C90]': i + 1 > currentStep
+                }"
+                class="text-sm font-bold"
+                >{{ i + 1 }}</span
+              >
+            </div>
+  
+            <div
+            [ngClass]="{
+                'text-[#170F49]': i + 1 <= currentStep,
+                'text-[#6F6C90]': i + 1 > currentStep
+              }" class="w-full">
+                {{ step.label }}</div>
+          </div>
+  
+          <!-- <div class="mt-2 mr-4">
+            <h6
+              [ngClass]="{
+                'stepper-text-color': i + 1 <= currentStep,
+                'stepper-text-gray': i + 1 > currentStep
+              }"
+              class="text-sm font-bold"
+              >{{ step.label }}</h6
+            >
+          </div> -->
+        </div>
+      </div>
+  
+      <div *ngIf="currentStep === 1" >
+        <hr class="border-t border-t-1 border-dashed border-[#D9DBE9]" />
+        <ng-content select="job-personal-details"></ng-content>
+      </div>
+  
+      <div *ngIf="currentStep === 2">
+        <hr class="border-t border-t-1 border-dashed border-[#D9DBE9]" />
+        <ng-content select="job-address-details"></ng-content>
+      </div>
+  
+      <div *ngIf="currentStep === 3">
+        <hr class="border-t border-t-1 border-dashed border-[#D9DBE9]" />
+        <ng-content select="job-work-experience-details"></ng-content>
+      </div>
+
+      <div *ngIf="currentStep === 4">
+        <hr class="border-t border-t-1 border-dashed border-[#D9DBE9]" />
+        <ng-content select="job-documents"></ng-content>
+      </div>
+
+      <div *ngIf="currentStep === 5">
+        <hr class="border-t border-t-1 border-dashed border-[#D9DBE9]" />
+        <ng-content select="job-other-details"></ng-content>
+      </div>
+  
+      <div class="stepper-nav-buttons mt-8 flex justify-between p-5">
+        <app-button *ngIf="currentStep > 1" (click)="prevStep()" classNames="bg-green-500 text-white py-3 my-5 px-6 rounded w-full">
+          Previous Step
+        </app-button>
+  
+        <app-button *ngIf="currentStep < steps.length" (click)="nextStep()" classNames="bg-green-500 text-white py-3 my-5 px-6 rounded w-full">
+          Next Step
+        </app-button>
+  
+        <app-button *ngIf="currentStep === steps.length" class="text-white py-2 px-4 rounded">
+          Apply Job
+        </app-button>
+      </div>
+    </div>
+  </div>
+  

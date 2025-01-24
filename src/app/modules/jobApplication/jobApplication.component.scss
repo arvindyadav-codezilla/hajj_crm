@@ -1,0 +1,33 @@
+.stepper-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.stepper-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.stepper-nav div {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.stepper-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stepper-nav-buttons button {
+  padding: 10px 20px;
+}
+
+.stepper-text-color {
+  color: #B49164; 
+}
+
+.stepper-text-gray {
+    color: #a0aec0; 
+  }
+

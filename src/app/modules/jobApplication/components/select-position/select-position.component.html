@@ -1,0 +1,27 @@
+<form class="space-y-4 my-5 p-5">
+  <!-- <app-select
+    classNames="border-gray-500 w-full p-2 rounded"
+    [options]="['Management', 'Driver', 'Staff']"
+    label="Job Title"
+    [(ngModel)]="selectedValue"
+    selectOption="Select Position"
+    [ngModelOptions]="{ standalone: true }"
+  /> -->
+
+  <ng-select
+    [dropdownList]="dropdownList"
+    label="Job Title"
+    placeholder="Select Position"
+    [selectedItems]="selectedItems"
+    [singleSelection]="isSingleSelection"
+    (onSelectionChange)="handleSelectionChange($event)"
+  ></ng-select>
+
+  <app-button
+   type="button"
+    (click)="logSelectedJobTitle()"
+    classNames="bg-green-500 text-white py-3 my-5 px-6 rounded w-full"
+  >
+    Continue
+  </app-button>
+</form>

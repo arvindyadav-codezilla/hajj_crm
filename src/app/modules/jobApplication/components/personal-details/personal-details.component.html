@@ -1,0 +1,172 @@
+
+<form class="my-5 ">
+  <div class="grid grid-cols-3 gap-4 px-5">
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter your name"
+      label="First Name"
+    />
+
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter your name"
+      label="Second Name"
+    />
+
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter your name"
+      label="Last Name"
+    />
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter name"
+      label="Family Name"
+    />
+
+    <!-- <app-select
+      classNames="border-[#EFF0F6] min-h-[50px] w-full p-2 rounded"
+      [options]="['Option 1', 'Option 2', 'Option 3']"
+      label="ID Type"
+      selectOption="Select Type"
+    /> -->
+
+    <ng-select
+    [dropdownList]="idTypeList"
+    label="Select Type"
+    placeholder="Select Id Type"
+    [selectedItems]="selectedItems"
+    [singleSelection]="true"
+    (onSelectionChange)="handleSelectionChange($event)"
+  ></ng-select>
+
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter Number"
+      label="Id Number"
+    />
+    <!-- <app-select
+      classNames="border-[#EFF0F6] min-h-[50px] w-full p-2 rounded"
+      [options]="['Option 1', 'Option 2', 'Option 3']"
+      label="Nationlity"
+      selectOption="Select Nationlity"
+    /> -->
+
+    <ng-select
+    [dropdownList]="nationlityList"
+    label="Nationlity"
+    placeholder="Select Nationlity"
+    [selectedItems]="selectedItems"
+    [singleSelection]="true"
+    (onSelectionChange)="handleSelectionChange($event)"
+  ></ng-select>
+
+
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter your name"
+      label="DOB"
+    />
+
+    <app-input
+      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+      placeholder="Enter Residents"
+      label="Place of Residents"
+    />
+
+    <!-- <app-select
+      classNames="border-[#EFF0F6] min-h-[50px] w-full p-2 rounded"
+      [options]="['Option 1', 'Option 2', 'Option 3']"
+      label="Gender"
+      selectOption="Select Gender"
+    /> -->
+
+    <ng-select
+    [dropdownList]="genderList"
+    label="Gender"
+    placeholder="Select Gender"
+    [selectedItems]="selectedItems"
+    [singleSelection]="true"
+    (onSelectionChange)="handleSelectionChange($event)"
+  ></ng-select>
+  </div>
+  <div>
+    <div class="  tracking-wide relative z-50 mt-4 ">
+      <section class="text-white p-4 bg-[#4EBA6333]">
+        <p class="text-secondary fw-500">Number Verifications</p>
+      </section>
+
+      <div class="grid grid-cols-2 gap-4 mt-4 px-5">
+        <div class="flex items-center space-x-4">
+          <app-input
+            classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded w-full"
+            placeholder="Enter Mobile Number"
+            label="Mobile Number"
+          />
+          <app-button
+            classNames="bg-green-500 text-white py-3 px-6 rounded w-auto mt-8"
+          >
+            Send OTP
+          </app-button>
+        </div>
+        <div class="flex items-center space-x-4">
+          <app-input
+            classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded w-full"
+            placeholder="Enter OTP"
+            label="Verify OTP"
+          />
+          <app-button
+            classNames="bg-green-500 text-white py-3 px-6 rounded w-auto mt-8"
+          >
+            Verify
+          </app-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div >
+    <div class="  tracking-wide relative z-50 mt-4 ">
+      <section class=" bg-[#4EBA6333]  p-4 ">
+        <p class="text-secondary fw-500">Email Verifications</p>
+      </section>
+      
+
+      <div class="grid grid-cols-2 gap-4 mt-4 px-5">
+        <div class="flex items-center space-x-4">
+          <app-input
+            classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded w-full"
+            placeholder="Enter Email"
+            label="Email Address"
+          />
+          <app-button
+            classNames="bg-green-500 text-white py-3 px-6 rounded w-auto mt-8"
+          >
+            Send
+          </app-button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 mt-4 px-5">
+        <app-input
+          classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+          placeholder="Enter Number"
+          label="Phone Number"
+        />
+
+        <app-input
+          classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+          placeholder="Enter Number"
+          label="Alterntive Mobile Number"
+        />
+
+        <app-input
+          classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded"
+          placeholder="Enter  name"
+          label="Alterntive Contact Name"
+        />
+      </div>
+    </div>
+  </div>
+</form>
+

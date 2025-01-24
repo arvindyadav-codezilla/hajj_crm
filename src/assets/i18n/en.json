@@ -1,0 +1,75 @@
+{
+  "GLOBAL":{
+   "CONFIGURATION":"Configuration"
+  },
+  "DASHBOARD": {
+    "BASE":"Base",
+    "COLLABORATION":"Collaboration",
+    "CONFIG":"Config",
+    "LANGUAGE":"Language",
+    "DASHBOARD": "Dashboard",
+    "NFTS": "NFTs",
+    "AUTH": "Auth",
+    "SIGN_UP": "Sign up",
+    "SIGN_IN": "Sign in",
+    "FORGOT_PASSWORD": "Forgot Password",
+    "NEW_PASSWORD": "New Password",
+    "TWO_STEPS": "Two Steps",
+    "ERRORS": "Errors",
+    "404": "404",
+    "500": "500",
+    "COMPONENTS": "Components",
+    "TABLE": "Table",
+    "DOWNLOAD": "Download",
+    "GIFT_CARD": "Gift Card",
+    "USERS": "Users",
+    "SETTINGS": "Settings",
+    "NOTIFICATIONS": "Notifications",
+    "FOLDERS": "Folders",
+    "CURRENT_FILES": "Current Files",
+    "DOWNLOADS": "Downloads",
+    "TRASH": "Trash",
+    "ARABIC": "Arabic",
+    "ENGLISH": "English"
+  },
+
+  "JOB_APPLICATION": {
+    "TITLE": "Job Application",
+    "SUBTITLE": "Please fill the form below to receive a quote for your project. Feel free to add as much detail as needed.",
+    "LISTING":"Listing"
+  },
+  "LOGIN": {
+    "LOGOTEXT": "Bus Guidance Center\nTransporting Foreign Pilgrims",
+    "TITLE": "Login",
+    "SUBTITLE": "Enter your credential to access your account"
+  },
+  "ROLES" :{
+    "ADMIN":"Admin",
+    "HR":"HR",
+    "FINANCE":"Finance",
+    "GUIDANCE":"Guidance",
+    "TEXTLINE":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    "SERVICE_DETAILS":"Service Details"
+  },
+  "PROFILE":{
+    "YOUR_PROFILE":"Your Profile",
+    "SETTINGS":"Settings",
+    "LOGOUT":"Logout"
+  },
+  "CONFIG":{
+    "JOB_TYPE":"Job Type",
+    "SHIFT_TIMING":"Shift Timing",
+    "ID_TYPE":"Id Type",
+    "ACADEMIC":"Academic Qualifications",
+    "LANGUAGE_PREFERENCE":"Language Preference",
+    "LANGUAGE_LEVELS":"Language Levels",
+    "CLOTHES_SIZES":"Clothes Sizes",
+    "DOC_TYPES":"Doc Types",
+    "AVAILABILITIES":"Availabilities",
+    "RATING_TYPES":"Rating Types"
+  },
+  "GROUPS":{
+    "TITLE":"Group Role Permissions",
+    "SUBTITLE":"Groups"
+  }
+}

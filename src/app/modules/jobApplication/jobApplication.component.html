@@ -1,0 +1,39 @@
+
+
+<div style="background-image: url(/assets/images/jobBg.png);height: 100%;">
+<div class="h-[100px] w-full bg-white border-b-[2px] border-[#DFDFDF] flex justify-center items-center" >
+  <img src="assets/images/logo.png" />
+</div> 
+  <div class="p-6  justify-center items-center" 
+  [ngClass]="selectedJobTitle.length !== 0 ? 'h-[100%]' : 'h-screen'">
+
+    <div class="flex flex-col justify-center items-center space-y-8 w-full px-6">
+      <div class="text-center mt-10 mb-5 ">
+        <h1 class="text-2xl font-bold">{{ "JOB_APPLICATION.TITLE" | translate }}</h1>
+        <p class="mt-4 text-gray-600">
+          {{ "JOB_APPLICATION.SUBTITLE" | translate }}
+        </p>
+      </div>
+      <div class=" bg-white rounded-[34px] max-w-[1200px] shadow-[0px_5px_16px_0px_#080F340F]"  [ngClass]="selectedJobTitle.length !== 0 ? 'w-full' : 'w-[634px]'">
+       
+        @if (selectedJobTitle.length === 0) {
+          <job-select-position  (jobTitleSelected)="handleJobTitleSelected($event)"/>
+          } 
+          @else {
+            <app-stepper 
+            [steps]="steps"
+            [currentStep]="currentStep"
+            (stepChange)="onStepChange($event)">
+            <job-personal-details *ngIf="currentStep === 1"/>
+            <job-address-details *ngIf="currentStep === 2"/>
+            <job-work-experience-details *ngIf="currentStep === 3"/>
+            <job-documents *ngIf="currentStep === 4"/>
+            <job-other-details *ngIf="currentStep === 5"/>
+
+          </app-stepper>
+          
+          }
+          </div>
+      </div>
+    </div>
+    </div>

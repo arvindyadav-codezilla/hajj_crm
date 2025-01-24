@@ -1,0 +1,36 @@
+<div class="stepper-container">
+    <div class="stepper">
+      <div class="flex items-center mx-auto my-8 justify-around">
+    <div
+      *ngFor="let step of steps"
+      class="flex items-center gap-2 cursor-pointer flex-col step"
+      (click)="changeStep(step.id)"
+    >
+      <!-- Step Circle -->
+      <div
+        class="w-8 h-8 flex items-center justify-center rounded-full border-2 stepConnecter"
+        [ngClass]="{
+            'bg-[#170F49] border-[#170F49] text-[#f5f5f5] isActive': isActive(step.id),
+            'bg-[#B49164] border-[#B49164] text-[#fff] isCompleted': isCompleted(step.id),
+            'bg-[#EFF0F6] border-[#EFF0F6] text-[#6F6C90] isPending': !isActive(step.id) && !isCompleted(step.id)
+        }"
+      >
+        {{ step.id }}
+      </div>
+      <!-- Step Name -->
+      <div
+        [ngClass]="{
+          'text-[#170F49]': isActive(step.id),
+          'text-[#B49164] ': isCompleted(step.id),
+          'text-[#6F6C90]': !isActive(step.id) && !isCompleted(step.id)
+        }"
+      >
+        {{ step.name }}
+      </div>
+      <!-- Connector Line -->
+      <div *ngIf="step.id !== steps.length" class="flex-1 h-1 bg-gray-300"></div>
+    </div>
+  </div>
+  </div>
+  </div>
+  

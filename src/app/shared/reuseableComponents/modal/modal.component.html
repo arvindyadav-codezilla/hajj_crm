@@ -1,0 +1,18 @@
+<div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-50 transition-opacity duration-300 ease-out opacity-100">
+    <div class="bg-white p-4 rounded-lg shadow-lg max-w-sm w-full">
+      <h2 class="text-xl font-semibold mb-4">{{ title }}</h2>
+      <div class="text-gray-700 mb-4"> 
+        <ng-content></ng-content>
+      </div>
+  
+      <div class="flex justify-end space-x-2">
+        <app-button variant="outline" (click)="closeModal()" class="px-1 py-2  rounded-md ">
+          Close
+        </app-button>
+        <app-button variant="contained" (click)="confirmModal()" class="px-1 py-2 rounded-md ">
+          {{ buttonText }}
+        </app-button>
+      </div>
+    </div>
+  </div>
+  

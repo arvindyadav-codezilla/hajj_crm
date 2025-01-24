@@ -1,0 +1,43 @@
+.stepper-container {
+    .stepper {
+      background-color: white;
+      border-radius: 35px;
+    //   padding: 20px;
+      .stepperCounter{
+          & > div {
+            max-width: 200px;
+            min-width: 200px;
+            text-align: center;
+          }
+          &:last-child{
+            .stepConnecter{
+                &::after{
+                    display: none;
+                }
+            }
+          }
+
+      }
+    }
+  
+    .stepper-nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stepConnecter {
+      position: relative;
+      &::after{
+        content: "";
+        background-color: #EFF0F6;
+        width: 150px;
+        position: absolute;
+        top: 10px;
+        height: 6px;
+        border-radius: 40px;
+        left: 48px;
+      }
+     
+    }
+  }
+  

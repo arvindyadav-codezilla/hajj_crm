@@ -1,0 +1,57 @@
+<!-- table.component.html -->
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th *ngIf="showCheckboxes" scope="col" class="p-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                    </div>
+                </th>
+                <ng-container *ngIf="tableColumn && tableColumn.length > 0">
+                    <th *ngFor="let header of tableColumn" scope="col" class="px-6 py-3 whitespace-nowrap">
+                        {{ header }}
+                    </th>
+                </ng-container>
+                <ng-container *ngIf="!tableColumn || tableColumn.length === 0">
+                    <th *ngFor="let header of tableHeaders" scope="col" class="px-6 py-3">
+                        {{ header }}
+                    </th>
+                </ng-container>
+                <th scope="col" class="px-6 py-3 text-center" colspan="2">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of tableData" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td *ngIf="showCheckboxes" class="w-4 p-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                    </div>
+                </td>
+                <td class="px-6 py-4" *ngFor="let header of tableHeaders">
+                    {{ row[header] }}
+                  </td>
+                <td class="px-6 py-4 text-center">
+                    <a  (click)="handleAction('edit', row, $event)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Edit</a>
+                </td>
+                <td class="px-6 py-4 text-center">
+                    <a  (click)="handleAction('delete', row, $event)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <nav *ngIf="showPagination" class="flex items-center flex-column flex-wrap md:flex-row justify-between p-4" aria-label="Table navigation">
+        <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">
+            Showing <span class="font-semibold text-gray-900 dark:text-white">{{pagination.start}}-{{pagination.end}}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{pagination.total}}</span>
+        </span>
+        <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
+            <li><a  (click)="onPreviousPage()" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a></li>
+            <li *ngFor="let page of pagination.pages" [class.active]="page === pagination.currentPage">
+                <a  (click)="handlePageChange(page)" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ page }}</a>
+            </li>
+            <li><a  (click)="onNextPage()" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a></li>
+        </ul>
+    </nav>
+</div>

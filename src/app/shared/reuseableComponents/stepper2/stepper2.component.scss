@@ -1,0 +1,59 @@
+.stepper-container {
+    .stepper {
+      background-color: white;
+      border-radius: 35px;
+      // padding: 20px; // Uncomment if needed
+  
+      .stepperCounter {
+  
+  
+        &:last-child {
+          .stepConnecter {
+            &::after {
+              display: none;
+            }
+          }
+        }
+     
+      }
+  
+      .step {
+        max-width: 200px;
+        min-width: 200px;
+        text-align: center;
+        &:last-child {
+          .stepConnecter {
+            &::after {
+              display: none; 
+            }
+          }
+        }
+      }
+    }
+  
+    .stepper-nav-buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .stepConnecter {
+      position: relative;
+  
+      &::after {
+        content: "";
+        background-color: #EFF0F6;
+        width: 170px;
+        height: 6px;
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        border-radius: 40px;
+      }
+      &.isCompleted::after {
+        content:'';
+        background-color: #B49164; /* Example color change */
+      }
+    }
+  }
+  

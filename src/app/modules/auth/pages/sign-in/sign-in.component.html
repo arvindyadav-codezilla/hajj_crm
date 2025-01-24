@@ -1,0 +1,88 @@
+<!-- login form -->
+<form class="my-10 space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="text-center">
+    <h2 class="mb-1 text-3xl font-semibold text-foreground">{{ "LOGIN.TITLE" | translate }}<span class="text-primary"></span></h2>
+    <p class="text-sm text-muted-foreground">{{ "LOGIN.SUBTITLE" | translate }}</p>
+  </div>
+
+
+
+  <div class="space-y-3 text-left">
+    <div class="form__group">
+      <div class="relative">
+        <label
+        for="username"
+        class=" pb-2 mb-3 text-sm text-black font-semibold">
+        Employee Number
+      </label>
+        <input
+          type="text"
+          id="username"
+          [ngClass]="{ 'is__invalid-input': submitted && f['username'].errors }"
+          class="peer block"
+          placeholder=" "
+          formControlName="username" />
+     
+      </div>
+      <div *ngIf="submitted && f['username'].errors" class="is__invalid-error">
+        <div *ngIf="f['username'].errors['required']">Required field</div>
+        <div *ngIf="f['username'].errors['username']">Email must be an email address valid</div>
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label
+        for="password"
+        class=" pb-2 mb-3 text-sm text-black font-semibold">
+        Password
+      </label>
+        <input
+          [type]="passwordTextType ? 'text' : 'password'"
+          id="password"
+          [ngClass]="{ 'is__invalid-input': submitted && f['email'].errors }"
+          class="peer block"
+          placeholder=" "
+          formControlName="password" />
+  
+        <span class="absolute top-9 right-5 cursor-pointer text-muted-foreground" (click)="togglePasswordTextType()">
+          <svg-icon
+            [src]="
+              !passwordTextType
+                ? 'assets/icons/heroicons/outline/eye-off.svg'
+                : 'assets/icons/heroicons/outline/eye.svg'
+            "
+            [svgClass]="'h-5 w-5'">
+          </svg-icon>
+        </span>
+      </div>
+      <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
+        <div *ngIf="f['password'].errors['required']">Required field</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-2 flex items-center justify-between space-x-3">
+    <div class="flex items-center">
+      <input id="remember-me" name="remember-me" type="checkbox" />
+      <label for="remember-me" class="ml-2 block text-sm text-muted-foreground"> Remember me </label>
+    </div>
+
+    <app-button routerLink="/auth/forgot-password" impact="none" tone="primary" shape="rounded" size="small">
+      Forgot your password?
+    </app-button>
+  </div>
+
+  <!-- Submit Button -->
+  <div>
+    <app-button full impact="bold" tone="primary" shape="rounded" size="medium">Sign in</app-button>
+  </div>
+
+  <!-- Sign-up -->
+  <div class="flex items-center text-sm text-muted-foreground">
+    Not a Member yet?
+    <app-button routerLink="/auth/sign-up" impact="none" tone="primary" shape="rounded" size="small">
+      Sign up
+    </app-button>
+  </div>
+</form>

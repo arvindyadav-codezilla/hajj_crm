@@ -1,0 +1,280 @@
+<div style="background-image: url(/assets/images/jobBg.png); height: 100%">
+  <div
+    class="h-[100px] w-full bg-white border-b-[2px] border-[#DFDFDF] flex justify-center items-center"
+  >
+    <img src="assets/images/logo.png" />
+  </div>
+  <div
+    class="p-6 justify-center items-center"
+    [ngClass]="selectedJobTitle.length !== 0 ? 'h-[100%]' : 'h-screen'"
+  >
+    <div
+      class="flex flex-col justify-center items-center space-y-8 w-full px-6"
+    >
+      <div class="text-center mt-10 mb-5">
+        <h1 class="text-2xl font-bold">
+          {{ "JOB_APPLICATION.TITLE" | translate }}
+        </h1>
+        <p class="mt-4 text-gray-600">
+          {{ "JOB_APPLICATION.SUBTITLE" | translate }}
+        </p>
+      </div>
+      <div
+        class="bg-white rounded-[34px] max-w-[1200px] shadow-[0px_5px_16px_0px_#080F340F]"
+        [ngClass]="selectedJobTitle.length !== 0 ? 'w-full' : 'w-[634px]'"
+      >
+        @if (selectedJobTitle.length === 0) {
+        <job-select-position
+          (jobTitleSelected)="handleJobTitleSelected($event)"
+        />
+        } @else {
+        <!-- Reusable Stepper -->
+        <app-stepper2
+          [steps]="steps"
+          [currentStep]="currentStep"
+          (stepChange)="onStepChange($event)"
+        ></app-stepper2>
+
+        <!-- Form Fields -->
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-wrap p-5 gap-5">
+          
+            <ng-container *ngFor="let field of getCurrentStepFields()">
+                <div *ngIf="field.name !== 'mobile' 
+                 && field.name !== 'verifyOTP' 
+                 && field.name !== 'phone' 
+                 && field.name !== 'contactMobile' 
+                 && field.name !== 'contactName'
+                 && field.name !== 'Academic'
+                 && field.name !== 'Specialit'
+                 && field.name !== 'endDate'
+                 " 
+                 class="w-[32%]">
+                  <app-input
+                    *ngIf="
+                      field.type === 'text' ||
+                      field.type === 'email' ||
+                      field.type === 'date'
+                    "
+                    classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                    [placeholder]="field.placeholder ?? 'Enter value'"
+                    [formControlName]="field.name"
+                    [label]="field.label"
+                    [type]="field.type"
+                  />
+              
+                  <ng-select
+                    *ngIf="field.type === 'select'"
+                    [dropdownList]="field.options ?? []"
+                    [label]="field.label"
+                    [formControlName]="field.name"
+                    [placeholder]="field.placeholder ?? 'Enter value'"
+                    [selectedItems]="selectedItems"
+                    [singleSelection]="true"
+                    (onSelectionChange)="handleSelectionChange($event)"
+                  ></ng-select>
+              
+                  <input
+                    *ngIf="field.type === 'file'"
+                    type="file"
+                    formControlName="document"
+                    class="border p-2 w-full"
+                  />
+              
+                  <!-- Validation Messages -->
+                  <div
+                    *ngIf="form.get(field.name)?.invalid && form.get(field.name)?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                </div>
+              </ng-container>
+              
+              <ng-container *ngIf="currentStep === 1">
+                <div class="mb-6 w-[100%] flex flex-col">
+                    <h3 class="text-lg font-semibold w-[100%] bg-[#4EBA6333] text-[#4EBA63] p-2 mb-6">Number Verification *</h3>
+                    <div class="w-[100%] flex flex-row gap-5" >
+                    <!-- Mobile Number -->
+                    <div class="w-[100%]" >
+                    <app-input
+                      *ngIf="form.get('mobile')"
+                      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                      [placeholder]="'Enter Mobile Number'"
+                      [formControlName]="'mobile'"
+                      [label]="'Mobile Number'"
+                      [type]="'text'"
+                    />
+                    <div
+                    *ngIf="form.get('mobile')?.invalid && form.get('mobile')?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                
+                    </div>
+                    <!-- Verify OTP -->
+                    <div class="w-[100%]" >
+                    <app-input
+                      *ngIf="form.get('verifyOTP')"
+                      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                      [placeholder]="'Enter OTP'"
+                      [formControlName]="'verifyOTP'"
+                      [label]="'Verify OTP'"
+                      [type]="'text'"
+                    />
+                    <div
+                    *ngIf="form.get('verifyOTP')?.invalid && form.get('verifyOTP')?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                    </div>
+                    </div>
+                  </div>
+    
+    
+                  <div class="mb-6 w-[100%] flex flex-col">
+                    <h3 class="text-lg font-semibold w-[100%] bg-[#4EBA6333] text-[#4EBA63] p-2 mb-6">Email Verification (Optional) *</h3>
+                    <div class="w-[100%] flex flex-row gap-5" >
+                    <!-- Mobile Number -->
+                    <div class="w-[100%]" >
+                    <app-input
+                      *ngIf="form.get('phone')"
+                      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                      [placeholder]="'Enter phone Number'"
+                      [formControlName]="'phone'"
+                      [label]="'phone Number'"
+                      [type]="'text'"
+                    />
+                    <div
+                    *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                
+                    </div>
+                    <!-- Verify OTP -->
+                    <div class="w-[100%]" >
+                    <app-input
+                      *ngIf="form.get('contactMobile')"
+                      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                      [placeholder]="'Enter OTP'"
+                      [formControlName]="'contactMobile'"
+                      [label]="'Verify OTP'"
+                      [type]="'text'"
+                    />
+                    <div
+                    *ngIf="form.get('contactMobile')?.invalid && form.get('contactMobile')?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                    </div>
+    
+                    <div class="w-[100%]" >
+                        <app-input
+                          *ngIf="form.get('contactName')"
+                          classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                          [placeholder]="'Enter OTP'"
+                          [formControlName]="'contactName'"
+                          [label]="'Verify OTP'"
+                          [type]="'text'"
+                        />
+                        <div
+                        *ngIf="form.get('contactName')?.invalid && form.get('contactName')?.touched"
+                        class="text-red-500"
+                      >
+                        This field is required
+                      </div>
+                        </div>
+                    </div>
+                  </div>
+              </ng-container>
+
+              <ng-container *ngIf="currentStep === 2">
+                <div class="mb-6 w-[100%] flex flex-col">
+                    <h3 class="text-lg font-semibold w-[100%] bg-[#4EBA6333] text-[#4EBA63] p-2 mb-6">Educational Details *</h3>
+                    <div class="w-[100%] flex flex-row gap-5" >
+                    <!-- Mobile Number -->
+                    <div class="w-[100%]" >
+                    <app-input
+                      *ngIf="form.get('Academic')"
+                      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                      [placeholder]="'Enter Academic Number'"
+                      [formControlName]="'Academic'"
+                      [label]="'Academic'"
+                      [type]="'text'"
+                    />
+                    <div
+                    *ngIf="form.get('Academic')?.invalid && form.get('Academic')?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                
+                    </div>
+                    <!-- Verify OTP -->
+                    <div class="w-[100%]" >
+                    <app-input
+                      *ngIf="form.get('Specialit')"
+                      classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                      [placeholder]="'Enter Specialit'"
+                      [formControlName]="'Specialit'"
+                      [label]="'Specialit'"
+                      [type]="'text'"
+                    />
+                    <div
+                    *ngIf="form.get('Specialit')?.invalid && form.get('Specialit')?.touched"
+                    class="text-red-500"
+                  >
+                    This field is required
+                  </div>
+                    </div>
+
+                    <div class="w-[100%]" >
+                        <app-input
+                          *ngIf="form.get('endDate')"
+                          classNames="border-[#EFF0F6] min-h-[50px] p-2 rounded text-[16px]"
+                          [placeholder]="'Enter End date'"
+                          [formControlName]="'endDate'"
+                          [label]="'End Date'"
+                          [type]="'text'"
+                        />
+                        <div
+                        *ngIf="form.get('endDate')?.invalid && form.get('endDate')?.touched"
+                        class="text-red-500"
+                      >
+                        This field is required
+                      </div>
+                        </div>
+                    </div>
+                  </div>
+              </ng-container>
+          
+          <!-- Navigation Buttons -->
+          <div class="flex justify-between py-5 w-[100%]">
+            <app-button
+              type="button"
+              (click)="onStepChange(currentStep - 1)"
+              [disabled]="currentStep === 1"
+            >
+              Previous Step
+            </app-button>
+            <app-button
+              type="button"
+              (click)="onStepChange(currentStep + 1)"
+              [disabled]="currentStep === steps.length"
+            >
+              Next Step
+            </app-button>
+            <app-button *ngIf="currentStep === steps.length" type="submit">
+              Submit
+            </app-button>
+          </div>
+        </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>
