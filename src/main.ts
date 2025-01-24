@@ -16,7 +16,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 if (environment.production) {
   enableProdMode();
-  //show this warning only on prod mode
+  //show this warning only on prod 
   if (window) {
     selfXSSWarning();
   }
