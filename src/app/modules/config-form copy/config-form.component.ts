@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfigService } from '@core/services/config.service';
 import { NgSelectComponent } from '@shared/reuseableComponents/elements/ngSelect.component';
 import { InputComponent } from '@shared/reuseableComponents/elements/input.components';
 import { ButtonComponent } from '@shared/reuseableComponents/elements/button.component';
@@ -11,7 +10,8 @@ import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '@shared/reuseableComponents/modal/modal.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { LanguageService } from '@core/services/language.service';
-import { forkJoin, take } from 'rxjs';
+import { take } from 'rxjs';
+import { JobListingService } from '@core/services/job-listing.service';
 
 interface DropdownItem {
   item_id: number;
@@ -26,53 +26,24 @@ interface Pagination {
   currentPage: number;
 }
 
-interface Language {
-  language: {
-    display_name: string;
-  };
-}
-
-interface ConfigItem {
-  id: number;
-  first_name: string;
-  last_name: string;
-  date_of_birth: string;
-  nationality: {
-    name: string;
-  };
-  mobile_number: string;
-  languages: Language[];
-}
-
-interface TableData {
-  id: number;
-  FullName: string;
-  Dob: string;
-  Nationality: string;
-  Mobile: string;
-  Language: string;
-}
-
 @Component({
-  selector: 'app-job-listing',
+  selector: 'app-config-form',
   standalone: true,
   imports: [ReactiveFormsModule,NgIf, NgSelectComponent,AngularSvgIconModule, InputComponent, ButtonComponent,DataTableComponent,NgFor,ModalComponent],
-  templateUrl: './job-listing.component.html',
-  styleUrl: './job-listing.component.scss'
+  templateUrl: './config-form.component.html',
+  styleUrl: './config-form.component.scss'
 })
-export class JobListingComponent implements OnInit {
+export class ConfigFormComponent implements OnInit {
   form!: FormGroup;
   entityType: any;
   entityData: any;
   isEditMode = false;
   isDeleteMode = false;
   isEditId:any;
-  tableBody: any;
+  configData: any;
   entityId: string | null = null;
   langTypeList: DropdownItem[] = [];
   selectedItems: DropdownItem[] = [];
-  tableHeader:any;
-  tableColumn:any;
   tableData: any[] = [];
   isModalOpen: boolean = false;  // Modal visibility controlled here
   modalTitle: string = '';  // Title passed to modal
@@ -93,13 +64,11 @@ export class JobListingComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private languageService: LanguageService,
-    private configService: ConfigService,
+    private jobListingService: JobListingService,
     private toast: ToastrService // injected directly in constructor for better clarity
   ) {}
 
  ngOnInit(): void {
-
-
   this.route.data.subscribe((data: any) => {
     this.entityType = data?.type;
     if (this.entityType) {
@@ -130,7 +99,25 @@ export class JobListingComponent implements OnInit {
     });
   }
 
- 
+  // Load entity data when in edit mode
+  // loadEntityData() {
+  //   if (!this.entityId) return;
+  //   this.languageService.currentLang$.subscribe((lang: string) => {
+  //   this.jobListingService.getConfig(this.entityType,lang).subscribe((data) => {
+  //     const entity = data.find((item: any) => item.id === this.entityId);
+  //     if (entity) {
+  //       this.form.patchValue({
+  //         language: entity.language,
+  //         displayName: entity.displayName,
+  //       });
+  //     } else {
+  //       console.error('Entity not found in data:', this.entityId);
+  //     }
+  //   });
+  // });
+  // }
+
+
   openModal(rowData?: any, type?: string) {
     this.isModalOpen = true; 
     const titleMap: { [key: string]: string } = {
@@ -182,30 +169,12 @@ export class JobListingComponent implements OnInit {
       console.error('Entity type is not defined!');
       return;
     }
-  
-    // Subscribe once to currentLang$
     this.languageService.currentLang$.pipe(take(1)).subscribe((lang: string) => {
-      // Create two observables for fetching the table header and body
-      const headerObservable = this.configService.getConfig(`fields/${this.entityType}/list_type`, lang);
-      const bodyObservable = this.configService.getConfig(this.entityType, lang);
-  
-      // Use forkJoin to execute both API calls concurrently
-      forkJoin([headerObservable, bodyObservable]).subscribe(
-        ([headerData, bodyData]) => {
-          // Process header data
-          if (headerData?.model === this.entityType) {
-            // tableHeader will contain the dynamic fields, use it directly
-            this.tableHeader = headerData.fields.map((item:any)=> item.verbose_name);
-            this.tableColumn = headerData.fields.map((item:any)=> item.name);
-
-            console.log('API response: Header', this.tableHeader);
-          }
-  
-          // Process table body data
-          this.tableBody = bodyData;
-          console.log(this.tableBody,'body')
-          this.transformDataForTable(this.tableBody.results);
-          console.log('API response: Body', this.tableBody);
+      this.jobListingService.getConfig(this.entityType, lang).subscribe(
+        (data) => {
+          this.configData = data.results.data;
+          this.transformDataForTable(this.configData);
+          console.log('API response:', this.configData);
         },
         (error) => {
           console.error('Error fetching config:', error);
@@ -213,27 +182,6 @@ export class JobListingComponent implements OnInit {
       );
     });
   }
-
-
-  transformDataForTable(tableBody: any) {
-    this.tableData = tableBody?.map((item: any) => {
-      const row: any = {};
-      this.tableColumn.forEach((col: string) => {
-        if (item[col] && typeof item[col] === 'object') {
-          row[col] = item[col].key ? item[col].key :
-          item[col].name ? item[col].name :
-          item[col].display_name ? item[col].display_name : ''
-        } else {
-          row[col] = item[col];
-        }
-      });
-      return row;
-    });
-  
-    this.pagination.total = this.tableBody.count;
-    this.updatePagination();
-  }
-  
   
 
 
@@ -257,9 +205,15 @@ export class JobListingComponent implements OnInit {
     });
   }
 
- 
-
-  
+  transformDataForTable(configData: any) {
+    this.tableData = configData.map((item: any) => ({
+      id: item.id,
+      Arabic: item.display_name.ar,
+      English: item.display_name.en
+    }));
+    this.pagination.total = this.tableData.length;
+    this.updatePagination();
+  }
 
 
   updatePagination() {
@@ -270,13 +224,12 @@ export class JobListingComponent implements OnInit {
     const end = this.pagination.currentPage * 10;
     this.pagination.start = start + 1;
     this.pagination.end = end > this.pagination.total ? this.pagination.total : end;
-    this.tableData = this.tableData?.slice(start, end);
+    this.tableData = this.tableData.slice(start, end);
   }
 
   onPageChange(page: number) {
-    console.log(page)
-    // this.pagination.currentPage = page;
-    // this.updatePagination();
+    this.pagination.currentPage = page;
+    this.updatePagination();
   }
 
   onNextPage() {
@@ -300,7 +253,7 @@ export class JobListingComponent implements OnInit {
 
   onDelete() {
     this.languageService.currentLang$.subscribe((lang: string) => {
-    this.configService.deleteConfig(this.entityType, this.isEditId!,lang).subscribe(
+    this.jobListingService.deleteConfig(this.entityType, this.isEditId!,lang).subscribe(
       (response) => {
         this.toast.success('Deleted successfully!');
         this.closeModal();
@@ -333,7 +286,7 @@ export class JobListingComponent implements OnInit {
 
       if (this.isEditMode) {
         this.languageService.currentLang$.subscribe((lang: string) => {
-        this.configService.updateConfig(this.entityType, this.isEditId!, payload,lang).subscribe(
+        this.jobListingService.updateConfig(this.entityType, this.isEditId!, payload,lang).subscribe(
           (response) => {
             this.toast.success('Updated successfully!');
             this.closeModal();
@@ -347,7 +300,7 @@ export class JobListingComponent implements OnInit {
         });
       } else {
         this.languageService.currentLang$.subscribe((lang: string) => {
-        this.configService.createConfig(this.entityType, payload,lang).subscribe(
+        this.jobListingService.createConfig(this.entityType, payload,lang).subscribe(
           (response) => {
             this.toast.success(`${this.entityType} Created successfully!`);
             this.closeModal();

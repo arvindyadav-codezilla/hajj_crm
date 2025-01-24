@@ -6,7 +6,7 @@ import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { environment } from '../src/environments/environment';
+import { environment } from './environments/environment';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -15,8 +15,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 if (environment.production) {
-  enableProdMode(); 
-  //show this warning only on prod mode
+  enableProdMode();
+  //show this warning only on prod 
   if (window) {
     selfXSSWarning();
   }

@@ -8,9 +8,6 @@ import { SelectPositionComponent } from '../jobApplication/components/select-pos
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonComponent } from '@shared/reuseableComponents/elements/button.component';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { LanguageService } from '@core/services/language.service';
-import { JobSchemaService } from '@core/services/jobSchema.service';
-import { take } from 'rxjs';
 
 export interface Field {
   label: string;
@@ -48,7 +45,6 @@ export class MultiStepFormComponent implements OnInit {
   currentStep = 2;
   selectedJobTitle: DropdownItem[] = [];
   selectedOption: string = '';
-  jobSchemaData: any;
   selectedItems: DropdownItem[] = [];
   form: FormGroup;  // Declare the form
   toast:ToastrService = inject(ToastrService);
@@ -148,36 +144,12 @@ export class MultiStepFormComponent implements OnInit {
 
   ];
 
-  constructor(
-    private fb: FormBuilder,    
-    private languageService: LanguageService,
-    private jobSchemaService:JobSchemaService
-    
-    ) {
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({});  // Initialize an empty form
   }
 
   ngOnInit() {
     this.createForm();  // Initialize the form when component is initialized
-    this.getApi();
-  }
-
-
-
-  getApi() {
-
-    this.languageService.currentLang$.pipe(take(1)).subscribe((lang: string) => {
-      this.jobSchemaService.getConfig('apply/schema', lang).subscribe(
-        (data) => {
-          this.jobSchemaData = data;
-          // this.transformDataForTable(this.configData);
-          console.log('API response:', this.jobSchemaData);
-        },
-        (error) => {
-          console.error('Error fetching config:', error);
-        }
-      );
-    });
   }
 
   handleSelectionChange(selectedItems: DropdownItem[]) {

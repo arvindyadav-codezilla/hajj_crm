@@ -4,8 +4,6 @@ import { MenuService } from '../../../services/menu.service';
 import { NavbarSubmenuComponent } from '../navbar-submenu/navbar-submenu.component';
 import { NgFor, NgClass } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '@core/services/language.service';
-import { languageSwitchService } from '../../../services/languageSwitch.service';
 
 @Component({
     selector: 'app-navbar-menu',
@@ -23,7 +21,7 @@ export class NavbarMenuComponent implements OnInit {
   private showMenuClass = ['scale-100', 'animate-fade-in-up', 'opacity-100', 'pointer-events-auto'];
   private hideMenuClass = ['scale-95', 'animate-fade-out-down', 'opacity-0', 'pointer-events-none'];
 
-  constructor(public menuService: MenuService,public languageSwitchService:languageSwitchService) {}
+  constructor(public menuService: MenuService) {}
 
   ngOnInit(): void {}
 
