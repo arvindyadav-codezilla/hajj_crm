@@ -11,7 +11,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { ModalComponent } from '@shared/reuseableComponents/modal/modal.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { LanguageService } from '@core/services/language.service';
-import { forkJoin, take } from 'rxjs';
+import { Subscription, debounceTime, forkJoin, take } from 'rxjs';
 
 interface DropdownItem {
   item_id: number;
@@ -74,6 +74,7 @@ export class JobListingComponent implements OnInit {
   tableHeader:any;
   tableColumn:any;
   tableData: any[] = [];
+  private langChangeSubscription!: Subscription;
   isModalOpen: boolean = false;  // Modal visibility controlled here
   modalTitle: string = '';  // Title passed to modal
   modalContent: string = `'This is some important information inside the modal.'`;  // Content passed to modal
@@ -98,6 +99,14 @@ export class JobListingComponent implements OnInit {
   ) {}
 
  ngOnInit(): void {
+ 
+  this.langChangeSubscription = this.languageService.currentLang$
+  .pipe(debounceTime(300)) // Wait 300ms to handle rapid changes
+  .subscribe((lang: string) => {
+    this.getApi(); // Call API only after debounce
+  });
+
+
 
 
   this.route.data.subscribe((data: any) => {
@@ -128,6 +137,14 @@ export class JobListingComponent implements OnInit {
         this.apiCalled = true;  // Prevent multiple calls
       }
     });
+  }
+
+
+  ngOnDestroy(): void {
+    // Unsubscribe to avoid memory leaks
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
   }
 
  
@@ -256,11 +273,6 @@ export class JobListingComponent implements OnInit {
       displayName: rowData.display_name,
     });
   }
-
- 
-
-  
-
 
   updatePagination() {
     const totalPages = Math.ceil(this.pagination.total / 10);

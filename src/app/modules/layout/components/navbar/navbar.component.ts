@@ -6,6 +6,7 @@ import { NavbarMenuComponent } from './navbar-menu/navbar-menu.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@core/services/language.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -21,7 +22,7 @@ import { LanguageService } from '@core/services/language.service';
 })
 export class NavbarComponent implements OnInit {
   currentLang!: string;
-  constructor(private menuService: MenuService,private languageService: LanguageService) {
+  constructor(private menuService: MenuService,private languageService: LanguageService,private router:Router) {
     this.languageService.currentLang$.subscribe(lang => {
       this.currentLang = lang;
     });
@@ -37,5 +38,8 @@ export class NavbarComponent implements OnInit {
   translateText(lang:string) {
     this.translate.use(lang)
     this.languageService.setLanguage(lang);
+    this.languageService.initializeLanguage(lang);
+    const currentUrl = this.router.url.split('/').slice(2).join('/');
+    this.router.navigate([`/${lang}/${currentUrl}`]);
   }
 }

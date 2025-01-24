@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { SubMenuItem } from 'src/app/core/models/menu.model';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { RouterLinkActive, RouterLink } from '@angular/router';
+import { RouterLinkActive, RouterLink, Router } from '@angular/router';
 import { NgFor, NgTemplateOutlet, NgIf, CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '@core/services/language.service';
@@ -18,7 +18,7 @@ export class NavbarSubmenuComponent implements OnInit {
   @Input() public submenu = <SubMenuItem[]>{};
   @ViewChild('submenuRef') submenuRef: ElementRef<HTMLDivElement> | undefined;
  
-  constructor(private languageService: LanguageService) {
+  constructor(private languageService: LanguageService,private router:Router) {
     this.languageService.currentLang$.subscribe(lang => {
       this.currentLang = lang;
     });
@@ -30,6 +30,9 @@ export class NavbarSubmenuComponent implements OnInit {
   onItemClick(item: any) {
     this.translate.use(item.prefix)
     this.languageService.setLanguage(item.prefix);
+    this.languageService.initializeLanguage(item.prefix);
+    const currentUrl = this.router.url.split('/').slice(2).join('/');
+    this.router.navigate([`/${item.prefix}/${currentUrl}`]);
   }
 
 

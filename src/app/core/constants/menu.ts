@@ -54,55 +54,55 @@ export class Menu {
         }
       ],
     },
-    {
-      group: 'GROUPS.TITLE',
-      separator: true,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/download.svg',
-          label: 'GROUPS.SUBTITLE',
-          route: '/en/groups/groups',
-        }
-      ],
-    },
+    // {
+    //   group: 'GROUPS.TITLE',
+    //   separator: true,
+    //   items: [
+    //     {
+    //       icon: 'assets/icons/heroicons/outline/download.svg',
+    //       label: 'GROUPS.SUBTITLE',
+    //       route: '/en/groups/groups',
+    //     }
+    //   ],
+    // },
     
-    {
-      group: 'GLOBAL.CONFIGURATION',
-      separator: false,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/chart-pie.svg',
-          label: 'DASHBOARD.CONFIG',
-          children: [
-            { label: 'CONFIG.JOB_TYPE', route: '/en/config/job-types' },
-            { label: 'CONFIG.SHIFT_TIMING', route: '/en/config/shift-timings' },
-            { label: 'CONFIG.ID_TYPE', route: '/en/config/id-types' },
-            { label: 'CONFIG.ACADEMIC', route: '/en/config/academic-qualifications' },
-            { label: 'CONFIG.LANGUAGE_LEVELS', route: '/en/config/language-levels' },
-            { label: 'CONFIG.CLOTHES_SIZES', route: '/en/config/clothes-sizes' },
-            { label: 'CONFIG.DOC_TYPES', route: '/en/config/doc-types' },
-            { label: 'CONFIG.AVAILABILITIES', route: '/en/config/availabilities' },
-            { label: 'CONFIG.RATING_TYPES', route: '/en/config/rating-types' },
-          ],
-        },
+    // {
+    //   group: 'GLOBAL.CONFIGURATION',
+    //   separator: false,
+    //   items: [
+    //     {
+    //       icon: 'assets/icons/heroicons/outline/chart-pie.svg',
+    //       label: 'DASHBOARD.CONFIG',
+    //       children: [
+    //         { label: 'CONFIG.JOB_TYPE', route: '/en/config/job-types' },
+    //         { label: 'CONFIG.SHIFT_TIMING', route: '/en/config/shift-timings' },
+    //         { label: 'CONFIG.ID_TYPE', route: '/en/config/id-types' },
+    //         { label: 'CONFIG.ACADEMIC', route: '/en/config/academic-qualifications' },
+    //         { label: 'CONFIG.LANGUAGE_LEVELS', route: '/en/config/language-levels' },
+    //         { label: 'CONFIG.CLOTHES_SIZES', route: '/en/config/clothes-sizes' },
+    //         { label: 'CONFIG.DOC_TYPES', route: '/en/config/doc-types' },
+    //         { label: 'CONFIG.AVAILABILITIES', route: '/en/config/availabilities' },
+    //         { label: 'CONFIG.RATING_TYPES', route: '/en/config/rating-types' },
+    //       ],
+    //     },
 
-      ],
-    },
-    {
-      group: 'DASHBOARD.LANGUAGE',
-      separator: false,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/lang.svg',
-          label: 'DASHBOARD.ARABIC',
-          prefix:'ar'
-        },
-        {
-          icon: 'assets/icons/heroicons/outline/lang.svg',
-          label: 'English',
-          prefix:'en'
-        }
-      ],
-    },
+    //   ],
+    // },
+    // {
+    //   group: 'DASHBOARD.LANGUAGE',
+    //   separator: false,
+    //   items: [
+    //     {
+    //       icon: 'assets/icons/heroicons/outline/lang.svg',
+    //       label: 'DASHBOARD.ARABIC',
+    //       prefix:'ar'
+    //     },
+    //     {
+    //       icon: 'assets/icons/heroicons/outline/lang.svg',
+    //       label: 'English',
+    //       prefix:'en'
+    //     }
+    //   ],
+    // },
   ];
 }
