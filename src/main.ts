@@ -6,7 +6,7 @@ import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { environment } from './app/environments/environment';
+import { environment } from './environments/environment';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';

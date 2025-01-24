@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { environment } from 'src/app/environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-responsive-helper',
